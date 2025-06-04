@@ -1,7 +1,3 @@
-import React from 'react';
-import AppNavigator from './navigation/AppNavigator';
+export { default } from "expo-router";
 
-export default function App() {
-  return <AppNavigator />;
-}
 

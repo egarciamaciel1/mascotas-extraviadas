@@ -17,7 +17,4 @@ export default function AppNavigator() {
         <Stack.Screen name="Report" component={ReportScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-}
-
-}
+  );}
