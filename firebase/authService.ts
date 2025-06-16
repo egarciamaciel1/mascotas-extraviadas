@@ -1,15 +1,22 @@
-// firebase/authService.ts
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+//import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
+import { firebaseConfig } from './firebaseConfig';
 
-export const registerUser = async (email: string, password: string) => {
-  return await createUserWithEmailAndPassword(auth, email, password);
-};
+//const app = initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-export const loginUser = async (email: string, password: string) => {
-  return await signInWithEmailAndPassword(auth, email, password);
-};
 
-export const logoutUser = async () => {
-  return await signOut(auth);
-};
+let auth;
+
+if (Platform.OS === 'web') {
+  auth = getAuth(app); // Para web usamos getAuth directo
+} else {
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  });
+}
+
+export { auth };
